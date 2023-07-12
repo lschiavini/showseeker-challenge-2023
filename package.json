@@ -1,0 +1,19 @@
+{
+  "name": "showseeker-challenge-2023",
+  "version": "1.0.0",
+  "description": "In our data grid, users can change the days of the week a current line would air on TV; it is a simple editable input box that they can type in their desired days.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "npx nodemon"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.4.1",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
+  }
+}
