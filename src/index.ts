@@ -47,7 +47,39 @@ function sanitizeInput(input: string) {
     })
 }
 
+function getDayThatMatchesFirstOneLetter(singleDay: string) {
+    const firstLetter = singleDay.charAt(0)
+    const firstTwoLetters = singleDay.charAt(0) + singleDay.charAt(1);
+    const days = Object.values(daysOfTheWeek)
+    let daysThatMatch;
+    days.filter((day) => {
+        if (firstLetter === 't' || firstLetter === 's') {
+            if (firstTwoLetters === day.charAt(0) + day.charAt(1)) {
+                daysThatMatch.push(day)
+            }
+        } else {
+            if (day.charAt(0) === firstLetter) {
+                daysThatMatch.push(day)
+            }
+        }
+        // if (day === 'sunday' || day === 'thrusday') {
+        //     const firstTwoLetters = singleDay.charAt(0) + singleDay.charAt(1);
+        //     if (firstTwoLetters === day.charAt(0) + day.charAt(1)) {
+        //         daysThatMatch.push(day)
+        //     }
+        // } else {
+        //     if (day.charAt(0) === firstLetter) {
+        //         daysThatMatch.push(day)
+        //     }
+        // }
+    });
+    return daysThatMatch;
+}
 
+function executeRules(input: string) {
+    let sanitizedInputs = sanitizeInput(input)
+
+}
 
 function main() {
     const readline = require('readline').createInterface({
@@ -58,6 +90,7 @@ function main() {
     readline.question('Days of the week: ', (daysString: string) => {
         input = daysString
         console.log(`input typed: ${input}`);
+        executeRules(input)
         readline.close();
     });
 }
