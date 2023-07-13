@@ -24,7 +24,33 @@ const numbersOfTheWeek: DaysOfTheWeek = {
     'unknown': 'unknown'
 }
 
+function inputIsAPartOfDayString(input: string): boolean {
+    console.log(input)
+    let isAPartOfDayString = false;
+    for (const day of daysOfTheWeek) {
+        day.includes(input) ? isAPartOfDayString = true : isAPartOfDayString = false
+        if (isAPartOfDayString) break;
+    }
+    return isAPartOfDayString
+}
 
+function getDashedDaysIsInCorrectFormat(dashedDays: string): boolean {
+    const days = dashedDays.split('-')
+    let allDaysInCorrectFormat = false;
+
+    if (days.length !== 2) {
+        allDaysInCorrectFormat = false;
+    } else {
+        for (const day of days) {
+            allDaysInCorrectFormat = inputIsAPartOfDayString(day)
+            if (allDaysInCorrectFormat) {
+                console.log('Break on getDashedDaysIsInCorrectFormat')
+                break;
+            }
+        }
+    }
+    return allDaysInCorrectFormat;
+}
 
 function sanitizeInput(input: string): string[] | string {
     if (input.match(/\d+/g)) return 'invalid input only letters, commas and dashes are allowed'
@@ -32,6 +58,24 @@ function sanitizeInput(input: string): string[] | string {
     if (input.includes('-') && input.length === 1) return 'invalid input must have more than one character'
     const lowerCase = input.trim().toLowerCase()
     const separatedByComma = lowerCase.split(',')
+    let allDaysInCorrectFormat = false;
+    for (const day of separatedByComma) {
+
+        if (day.includes('-')) {
+            allDaysInCorrectFormat = getDashedDaysIsInCorrectFormat(day);
+        } else {
+            allDaysInCorrectFormat = inputIsAPartOfDayString(day);
+        }
+
+        if (allDaysInCorrectFormat) {
+            console.log(`Break on sanitize input allDaysInCorrectFormat ${allDaysInCorrectFormat}`)
+            break;
+        }
+        console.log('Here')
+    }
+    console.log(`allDaysInCorrectFormat ${allDaysInCorrectFormat}`)
+
+    if (!allDaysInCorrectFormat) return 'invalid input - names of the days must contain the letters of the days of the week'
     return separatedByComma
 }
 
@@ -83,7 +127,7 @@ function handleDashedDays(dashedDays: string): string {
 
 export function executeRules(input: string): string {
     let sanitizedInputs = sanitizeInput(input)
-    if (typeof sanitizedInputs === 'string') throw sanitizedInputs
+    if (typeof sanitizedInputs === 'string') return sanitizedInputs
     let endString = ''
     sanitizedInputs.forEach((day) => {
         let endStringCurrentSize = endString.length
