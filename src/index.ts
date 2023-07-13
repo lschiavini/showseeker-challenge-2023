@@ -24,35 +24,7 @@ const numbersOfTheWeek: DaysOfTheWeek = {
     'unknown': 'unknown'
 }
 
-function rule1(input: string) {
 
-    console.log('rule1')
-}
-
-function rule2() {
-    console.log('rule2')
-}
-
-
-function rule3() {
-    console.log('rule1')
-}
-
-function rule4() {
-    console.log('rule2')
-}
-
-function rule5() {
-    console.log('rule2')
-}
-
-function rule6() {
-    console.log('rule2')
-}
-
-function rule7() {
-    console.log('rule2')
-}
 
 function sanitizeInput(input: string): string[] | string {
     if (input.match(/\d+/g)) return 'invalid input only letters, commas and dashes are allowed'
@@ -124,7 +96,6 @@ export function executeRules(input: string): string {
         if (innerEndString.length > 0 && endStringCurrentSize > 0) endString += ','
         endString += `${innerEndString}`
     })
-    console.log(endString)
     return endString
 }
 
@@ -137,7 +108,7 @@ function main() {
     readline.question('Days of the week: ', (daysString: string) => {
         input = daysString
         console.log(`input typed: ${input}`);
-        executeRules(input)
+        console.log(executeRules(input))
         readline.close();
     });
 }

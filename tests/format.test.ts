@@ -30,6 +30,12 @@ describe('format tests', () => {
         expect(result).toBe(correctResult)
     })
 
+    it('w-m', () => {
+        const result = executeRules('w-m')
+        const correctResult = '4,5,6,7,1,2'
+        expect(result).toBe(correctResult)
+    })
+
     it('mon-wed,thu,fri,sat,sun', () => {
         const result = executeRules('mon-wed,thu,fri,sat,sun')
         const correctResult = '2,3,4,5,6,7,1'
