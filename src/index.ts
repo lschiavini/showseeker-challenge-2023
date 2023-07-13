@@ -18,7 +18,7 @@ const numbersOfTheWeek: DaysOfTheWeek = {
     'monday': '2',
     'tuesday': '3',
     'wednesday': '4',
-    'thrusday': '5',
+    'thursday': '5',
     'friday': '6',
     'saturday': '7',
     'unknown': 'unknown'
@@ -67,10 +67,18 @@ export function getDayThatMatchesFirstOneLetter(singleDay: string): string {
     const firstTwoLetters = singleDay.charAt(0) + singleDay.charAt(1);
     let dayThatMatches: string = 'unknown';
     daysOfTheWeek.forEach((day) => {
-        console.log('singleDay', singleDay)
-        console.log('day', day)
+
         if (firstLetter === 't' || firstLetter === 's') {
-            if (firstTwoLetters === day.charAt(0) + day.charAt(1)) {
+            if (singleDay.length === 1 && firstLetter === 't') {
+                dayThatMatches = daysOfTheWeek[2]
+                return;
+            } else if (singleDay.length === 1 && firstLetter === 's') {
+                dayThatMatches = daysOfTheWeek[5]
+                return;
+            }
+            else if (firstTwoLetters === day.charAt(0) + day.charAt(1)) {
+                console.log('singleDay', singleDay)
+                console.log('day', day)
                 dayThatMatches = day
                 return;
             }
@@ -80,7 +88,6 @@ export function getDayThatMatchesFirstOneLetter(singleDay: string): string {
                 return;
             }
         }
-       
     });
     return numbersOfTheWeek[dayThatMatches];
 }
