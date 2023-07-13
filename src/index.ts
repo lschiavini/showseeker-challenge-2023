@@ -1,12 +1,27 @@
+const daysOfTheWeek = [
+    'sunday',
+    'monday',
+    'tuesday',
+    'wednesday',
+    'thursday',
+    'friday',
+    'saturday',
+    'unknown'
+];
 
-const daysOfTheWeek = {
-    1: 'sunday',
-    2: 'monday',
-    3: 'tuesday',
-    4: 'wednesday',
-    5: 'thrusday',
-    6: 'friday',
-    7: 'saturday'
+type DaysOfTheWeek = {
+    [key: string]: string;
+};
+
+const numbersOfTheWeek: DaysOfTheWeek = {
+    'sunday': '1',
+    'monday': '2',
+    'tuesday': '3',
+    'wednesday': '4',
+    'thrusday': '5',
+    'friday': '6',
+    'saturday': '7',
+    'unknown': 'unknown'
 }
 
 function rule1(input: string) {
@@ -47,33 +62,27 @@ function sanitizeInput(input: string) {
     })
 }
 
-function getDayThatMatchesFirstOneLetter(singleDay: string) {
+export function getDayThatMatchesFirstOneLetter(singleDay: string): string {
     const firstLetter = singleDay.charAt(0)
     const firstTwoLetters = singleDay.charAt(0) + singleDay.charAt(1);
-    const days = Object.values(daysOfTheWeek)
-    let daysThatMatch;
-    days.filter((day) => {
+    let dayThatMatches: string = 'unknown';
+    daysOfTheWeek.forEach((day) => {
+        console.log('singleDay', singleDay)
+        console.log('day', day)
         if (firstLetter === 't' || firstLetter === 's') {
             if (firstTwoLetters === day.charAt(0) + day.charAt(1)) {
-                daysThatMatch.push(day)
+                dayThatMatches = day
+                return;
             }
         } else {
             if (day.charAt(0) === firstLetter) {
-                daysThatMatch.push(day)
+                dayThatMatches = day
+                return;
             }
         }
-        // if (day === 'sunday' || day === 'thrusday') {
-        //     const firstTwoLetters = singleDay.charAt(0) + singleDay.charAt(1);
-        //     if (firstTwoLetters === day.charAt(0) + day.charAt(1)) {
-        //         daysThatMatch.push(day)
-        //     }
-        // } else {
-        //     if (day.charAt(0) === firstLetter) {
-        //         daysThatMatch.push(day)
-        //     }
-        // }
+       
     });
-    return daysThatMatch;
+    return numbersOfTheWeek[dayThatMatches];
 }
 
 function executeRules(input: string) {
