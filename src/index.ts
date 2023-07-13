@@ -54,12 +54,13 @@ function rule7() {
     console.log('rule2')
 }
 
-function sanitizeInput(input: string) {
+function sanitizeInput(input: string): string[] | string {
+    if (input.match(/\d+/g)) return 'invalid input only letters, commas and dashes are allowed'
+    if (input.includes(',') && input.length === 1) return 'invalid input must have more than one character'
+    if (input.includes('-') && input.length === 1) return 'invalid input must have more than one character'
     const lowerCase = input.trim().toLowerCase()
     const separatedByComma = lowerCase.split(',')
-    separatedByComma.forEach((day) => {
-
-    })
+    return separatedByComma
 }
 
 export function getDayThatMatchesFirstOneLetter(singleDay: string): string {
@@ -67,7 +68,6 @@ export function getDayThatMatchesFirstOneLetter(singleDay: string): string {
     const firstTwoLetters = singleDay.charAt(0) + singleDay.charAt(1);
     let dayThatMatches: string = 'unknown';
     daysOfTheWeek.forEach((day) => {
-
         if (firstLetter === 't' || firstLetter === 's') {
             if (singleDay.length === 1 && firstLetter === 't') {
                 dayThatMatches = daysOfTheWeek[2]
@@ -77,8 +77,6 @@ export function getDayThatMatchesFirstOneLetter(singleDay: string): string {
                 return;
             }
             else if (firstTwoLetters === day.charAt(0) + day.charAt(1)) {
-                console.log('singleDay', singleDay)
-                console.log('day', day)
                 dayThatMatches = day
                 return;
             }
@@ -92,9 +90,35 @@ export function getDayThatMatchesFirstOneLetter(singleDay: string): string {
     return numbersOfTheWeek[dayThatMatches];
 }
 
-export function executeRules(input: string) {
+export function executeRules(input: string): string {
     let sanitizedInputs = sanitizeInput(input)
-
+    if (typeof sanitizedInputs === 'string') throw sanitizedInputs
+    let endString = ''
+    sanitizedInputs.forEach((day) => {
+        let endStringCurrentSize = endString.length
+        let innerEndString: string = ''
+        if (!day.includes('-')) {
+            const dayThatMatches = getDayThatMatchesFirstOneLetter(day)
+            innerEndString += `${dayThatMatches}`
+        } else {
+            const newDays = day.split('-')
+            let initDay = Number(getDayThatMatchesFirstOneLetter(newDays[0]))
+            console.log('initDay', initDay)
+            const endDay = Number(getDayThatMatchesFirstOneLetter(newDays[1]))
+            console.log('endDay', endDay)
+            let splitDayString = ''
+            while (initDay !== endDay) {
+                innerEndString += `${initDay},`
+                initDay = initDay === 7 ? 1 : initDay + 1;
+                if (initDay === endDay) innerEndString += `${initDay},`
+            }
+            innerEndString = innerEndString.substring(0, innerEndString.length - 1)
+        }
+        if (innerEndString.length > 0 && endStringCurrentSize > 0) endString += ','
+        endString += `${innerEndString}`
+    })
+    console.log(endString)
+    return endString
 }
 
 function main() {
