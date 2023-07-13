@@ -9,4 +9,16 @@ describe('format tests', () => {
         const correctResult = '2,3,4,5,6,7,1'
         expect(result).toBe(correctResult)
     })
+
+    it('mon,tue,wed,thu,fri,sat,sun', () => {
+        const result = executeRules('mon,tue,wed,thu,fri,sat,sun')
+        const correctResult = '2,3,4,5,6,7,1'
+        expect(result).toBe(correctResult)
+    })
+
+    it('mon-wed,thu,fri,sat,sun', () => {
+        const result = executeRules('mon-wed,thu,fri,sat,sun')
+        const correctResult = '2,3,4,5,6,7,1'
+        expect(result).toBe(correctResult)
+    })
 })
