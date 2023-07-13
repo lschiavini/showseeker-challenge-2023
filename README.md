@@ -20,3 +20,9 @@ The function should be able to handle the following.
 5. The dash and comma can be combined (m-w,s,su = Monday, Tuesday, Wednesday, Saturday, Sunday)
 6. The function should return numbers to represent the days, Sunday being 1 and Saturday being 7
 7. It should not matter what order the days, dashes, or commas are in. (th,m-w,su)
+
+
+To run:
+Either run with `npm run start:dev` and use the terminal to put an answer.
+
+Or run `npm run test`
