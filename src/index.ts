@@ -1,3 +1,5 @@
+import { sep } from "path"
+
 const daysOfTheWeek = [
     'sunday',
     'monday',
@@ -7,11 +9,11 @@ const daysOfTheWeek = [
     'friday',
     'saturday',
     'unknown'
-];
+]
 
 type DaysOfTheWeek = {
-    [key: string]: string;
-};
+    [key: string]: string
+}
 
 const numbersOfTheWeek: DaysOfTheWeek = {
     'sunday': '1',
@@ -25,29 +27,45 @@ const numbersOfTheWeek: DaysOfTheWeek = {
 }
 
 function inputIsAPartOfDayString(input: string): boolean {
-    let isAPartOfDayString = false;
+    let isAPartOfDayString = false
+    let isLessThanDayLength = false
     for (const day of daysOfTheWeek) {
-        day.includes(input) ? isAPartOfDayString = true : isAPartOfDayString = false
-        if (isAPartOfDayString) break;
+        isAPartOfDayString = day.indexOf(input) >= 0
+        day.length >= input.length ? isLessThanDayLength = true : isLessThanDayLength = false
+        if (isAPartOfDayString && isLessThanDayLength) {
+            break
+        }
     }
     return isAPartOfDayString
 }
 
 function getDashedDaysIsInCorrectFormat(dashedDays: string): boolean {
     const days = dashedDays.split('-')
-    let allDaysInCorrectFormat = false;
+    let allDaysInCorrectFormat = false
 
     if (days.length !== 2) {
-        allDaysInCorrectFormat = false;
+        allDaysInCorrectFormat = false
     } else {
         for (const day of days) {
             allDaysInCorrectFormat = inputIsAPartOfDayString(day)
             if (allDaysInCorrectFormat) {
-                break;
+                break
             }
         }
     }
-    return allDaysInCorrectFormat;
+    return allDaysInCorrectFormat
+}
+
+function daysAreInCorrectFormat(separatedByComma: string[]): boolean {
+    let allDaysInCorrectFormat = false
+    for (const day of separatedByComma) {
+        if (day.includes('-')) {
+            allDaysInCorrectFormat = getDashedDaysIsInCorrectFormat(day)
+        } else {
+            allDaysInCorrectFormat = inputIsAPartOfDayString(day)
+        }
+    }
+    return allDaysInCorrectFormat
 }
 
 function sanitizeInput(input: string): string[] | string {
@@ -56,19 +74,7 @@ function sanitizeInput(input: string): string[] | string {
     if (input.includes('-') && input.length === 1) return 'invalid input must have more than one character'
     const lowerCase = input.trim().toLowerCase()
     const separatedByComma = lowerCase.split(',')
-    let allDaysInCorrectFormat = false;
-    for (const day of separatedByComma) {
-
-        if (day.includes('-')) {
-            allDaysInCorrectFormat = getDashedDaysIsInCorrectFormat(day);
-        } else {
-            allDaysInCorrectFormat = inputIsAPartOfDayString(day);
-        }
-
-        if (allDaysInCorrectFormat) {
-            break;
-        }
-    }
+    let allDaysInCorrectFormat = daysAreInCorrectFormat(separatedByComma)
 
     if (!allDaysInCorrectFormat) return 'invalid input - names of the days must contain the letters of the days of the week'
     return separatedByComma
@@ -76,29 +82,29 @@ function sanitizeInput(input: string): string[] | string {
 
 export function getDayThatMatchesFirstOneLetter(singleDay: string): string {
     const firstLetter = singleDay.charAt(0)
-    const firstTwoLetters = singleDay.charAt(0) + singleDay.charAt(1);
-    let dayThatMatches: string = 'unknown';
+    const firstTwoLetters = singleDay.charAt(0) + singleDay.charAt(1)
+    let dayThatMatches: string = 'unknown'
     daysOfTheWeek.forEach((day) => {
         if (firstLetter === 't' || firstLetter === 's') {
             if (singleDay.length === 1 && firstLetter === 't') {
                 dayThatMatches = daysOfTheWeek[2]
-                return;
+                return
             } else if (singleDay.length === 1 && firstLetter === 's') {
                 dayThatMatches = daysOfTheWeek[6]
-                return;
+                return
             }
             else if (firstTwoLetters === day.charAt(0) + day.charAt(1)) {
                 dayThatMatches = day
-                return;
+                return
             }
         } else {
             if (day.charAt(0) === firstLetter) {
                 dayThatMatches = day
-                return;
+                return
             }
         }
-    });
-    return numbersOfTheWeek[dayThatMatches];
+    })
+    return numbersOfTheWeek[dayThatMatches]
 }
 
 function getUniqueDays(day: string): string {
@@ -113,7 +119,7 @@ function handleDashedDays(dashedDays: string): string {
     let resultString = ''
     while (initDay !== endDay) {
         resultString += `${initDay},`
-        initDay = initDay === 7 ? 1 : initDay + 1;
+        initDay = initDay === 7 ? 1 : initDay + 1
         if (initDay === endDay) resultString += `${initDay},`
     }
     resultString = resultString.substring(0, resultString.length - 1)
@@ -142,14 +148,14 @@ function main() {
     const readline = require('readline').createInterface({
         input: process.stdin,
         output: process.stdout
-    });
-    let input;
+    })
+    let input
     readline.question('Days of the week: ', (daysString: string) => {
         input = daysString
-        console.log(`input typed: ${input}`);
+        console.log(`input typed: ${input}`)
         console.log(executeRules(input))
-        readline.close();
-    });
+        readline.close()
+    })
 }
 
 
