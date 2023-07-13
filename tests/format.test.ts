@@ -41,4 +41,10 @@ describe('format tests', () => {
         const correctResult = '2,3,4,5,6,7,1'
         expect(result).toBe(correctResult)
     })
+
+    it('th,m-w,su', () => {
+        const result = executeRules('th,m-w,su')
+        const correctResult = '5,2,3,4,1'
+        expect(result).toBe(correctResult)
+    })
 })
