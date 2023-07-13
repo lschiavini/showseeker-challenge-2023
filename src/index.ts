@@ -25,7 +25,6 @@ const numbersOfTheWeek: DaysOfTheWeek = {
 }
 
 function inputIsAPartOfDayString(input: string): boolean {
-    console.log(input)
     let isAPartOfDayString = false;
     for (const day of daysOfTheWeek) {
         day.includes(input) ? isAPartOfDayString = true : isAPartOfDayString = false
@@ -44,7 +43,6 @@ function getDashedDaysIsInCorrectFormat(dashedDays: string): boolean {
         for (const day of days) {
             allDaysInCorrectFormat = inputIsAPartOfDayString(day)
             if (allDaysInCorrectFormat) {
-                console.log('Break on getDashedDaysIsInCorrectFormat')
                 break;
             }
         }
@@ -68,12 +66,9 @@ function sanitizeInput(input: string): string[] | string {
         }
 
         if (allDaysInCorrectFormat) {
-            console.log(`Break on sanitize input allDaysInCorrectFormat ${allDaysInCorrectFormat}`)
             break;
         }
-        console.log('Here')
     }
-    console.log(`allDaysInCorrectFormat ${allDaysInCorrectFormat}`)
 
     if (!allDaysInCorrectFormat) return 'invalid input - names of the days must contain the letters of the days of the week'
     return separatedByComma
