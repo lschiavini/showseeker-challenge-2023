@@ -73,7 +73,7 @@ export function getDayThatMatchesFirstOneLetter(singleDay: string): string {
                 dayThatMatches = daysOfTheWeek[2]
                 return;
             } else if (singleDay.length === 1 && firstLetter === 's') {
-                dayThatMatches = daysOfTheWeek[5]
+                dayThatMatches = daysOfTheWeek[6]
                 return;
             }
             else if (firstTwoLetters === day.charAt(0) + day.charAt(1)) {
@@ -92,7 +92,7 @@ export function getDayThatMatchesFirstOneLetter(singleDay: string): string {
     return numbersOfTheWeek[dayThatMatches];
 }
 
-function executeRules(input: string) {
+export function executeRules(input: string) {
     let sanitizedInputs = sanitizeInput(input)
 
 }
