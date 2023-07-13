@@ -90,6 +90,25 @@ export function getDayThatMatchesFirstOneLetter(singleDay: string): string {
     return numbersOfTheWeek[dayThatMatches];
 }
 
+function getUniqueDays(day: string): string {
+    const dayThatMatches = getDayThatMatchesFirstOneLetter(day)
+    return `${dayThatMatches}`
+}
+
+function handleDashedDays(dashedDays: string): string {
+    const newDays = dashedDays.split('-')
+    let initDay = Number(getDayThatMatchesFirstOneLetter(newDays[0]))
+    const endDay = Number(getDayThatMatchesFirstOneLetter(newDays[1]))
+    let resultString = ''
+    while (initDay !== endDay) {
+        resultString += `${initDay},`
+        initDay = initDay === 7 ? 1 : initDay + 1;
+        if (initDay === endDay) resultString += `${initDay},`
+    }
+    resultString = resultString.substring(0, resultString.length - 1)
+    return resultString
+}
+
 export function executeRules(input: string): string {
     let sanitizedInputs = sanitizeInput(input)
     if (typeof sanitizedInputs === 'string') throw sanitizedInputs
@@ -98,21 +117,9 @@ export function executeRules(input: string): string {
         let endStringCurrentSize = endString.length
         let innerEndString: string = ''
         if (!day.includes('-')) {
-            const dayThatMatches = getDayThatMatchesFirstOneLetter(day)
-            innerEndString += `${dayThatMatches}`
+            innerEndString += getUniqueDays(day)
         } else {
-            const newDays = day.split('-')
-            let initDay = Number(getDayThatMatchesFirstOneLetter(newDays[0]))
-            console.log('initDay', initDay)
-            const endDay = Number(getDayThatMatchesFirstOneLetter(newDays[1]))
-            console.log('endDay', endDay)
-            let splitDayString = ''
-            while (initDay !== endDay) {
-                innerEndString += `${initDay},`
-                initDay = initDay === 7 ? 1 : initDay + 1;
-                if (initDay === endDay) innerEndString += `${initDay},`
-            }
-            innerEndString = innerEndString.substring(0, innerEndString.length - 1)
+            innerEndString += handleDashedDays(day)
         }
         if (innerEndString.length > 0 && endStringCurrentSize > 0) endString += ','
         endString += `${innerEndString}`
